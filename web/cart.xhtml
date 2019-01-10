@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+    </h:head>
+    <h:body>
+
+        <div class="row">
+            <div align="center" class="col-sm-12">
+                <h1>E-Shoping</h1>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                
+                <div class="col-lg-7">
+                    <h:form id="form">
+
+                        <p:dataTable var="cart" value="#{shoppingCart.cart}"  rows="5" >
+                            <f:facet name="header">
+                                <h:outputLabel value="Yout Cart"/>
+                            </f:facet>
+                            <p:column headerText="Product Name">
+                                <p:outputLabel value="#{cart.p.proName}"/>
+                            </p:column>
+                            <p:column headerText="Quantity" >
+                                <p:inputText value="#{cart.quantity}" style="width: 20px"/>
+                            </p:column>
+                            <p:column headerText="Price">
+                                <p:outputLabel value="#{cart.p.proPrice}"/>
+                            </p:column>
+                            <p:column headerText="Image">
+                                <p:graphicImage name="#{cart.p.proUrl}" library="imeges" width="50" height="80"/>
+                            </p:column>
+                            <p:column headerText="Delete">
+                                <h:commandButton value="Delete" action="#{shoppingCart.removeCart(cart)}"/>
+                            </p:column>
+
+                            <f:facet name="footer">
+                                Total: <h:outputLabel value="#{shoppingCart.total}"/>
+                            </f:facet>
+                        </p:dataTable>
+                        <p:commandButton value="Update" action="#{shoppingCart.updateCart()}" ajax="false"/>
+
+
+
+                        <p:commandButton value="Process Cart" action="#{shoppingCart.payment()}" ajax="false"/>
+                        <h:outputLink value="allproduct.xhtml">Continue Shopping</h:outputLink>
+                        <h:outputLink value="allproduct.xhtml">  Process Cart</h:outputLink>
+
+
+                    </h:form>            
+
+
+
+
+                </div>
+                <div class="col-lg-2"></div>
+
+
+            </div>
+
+        </div>
+    </h:body>
+</html>
+

@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+        <style>
+            .product{
+                width: 150px;
+                height: 200px;
+                float: left;
+                margin-right: 10px; 
+                
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:panel header="Cart">
+                <h:outputText value="#{shoppingCart.cartsize} #{shoppingCart.item}" id="cart"/>
+                <h:outputLink value="cart.xhtml">View Cart</h:outputLink>
+            </p:panel>
+            <p:dataGrid var="p" value="#{displayProductMB.allProduct}" columns="3" rows="5" paginator="true" id="p"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+                        {LastPageLink}" rowsPerPageTemplate="6,12,16">
+                <f:facet name="header">
+                    <h:outputLabel value="All Product"/>
+                </f:facet>
+                <p:panel header="#{p.proName}">
+                    <h:panelGrid columns="1">
+                        <h:graphicImage name="#{p.proUrl}" library="imeges" width="200" height="250"/>
+                        
+                        <h:outputText value="#{p.proPrice}"/>
+                        
+                        <p:commandButton action="#{shoppingCart.addtoCart(p)}" value="Add to Cart" ajax="false"/>
+                        
+                    </h:panelGrid>
+                    
+            </p:panel>
+        </p:dataGrid>
+            
+        
+    </h:form>
+</h:body>
+</html>
+

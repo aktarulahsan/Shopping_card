@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:panel header="Cart">
+                <h:outputText value="#{cartHandlerMB.cartsize} #{cartHandlerMB.item}" id="cart"/>
+                <h:outputLink value="viewcart.xhtml">View Cart</h:outputLink>
+            </p:panel>
+            <p:dataGrid var="product" value="#{displayProductMB.allProduct}" columns="3" rows="5" paginator="true" id="p"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+                        {LastPageLink}" rowsPerPageTemplate="6,12,16">
+                <f:facet name="header">
+                    <h:outputLabel value="All Product"/>
+                </f:facet>
+                <p:panel header="#{product.proName}">
+                    <h:panelGrid columns="1">
+                        <h:graphicImage name="#{product.proUrl}" library="imeges" width="200" height="250"/>
+                        <h:outputText value="#{product.proUrl}"/>
+                        <h:outputText value="#{product.proPrice}"/>
+                        
+                        <h:outputText value="Quantity"/>
+                        <h:inputText binding="#{input1}"/>
+                        <p:commandButton action="#{cartHandlerMB.processCart(input1.value)}" value="Add to Cart" update=":form:cart">
+                            <f:setPropertyActionListener target="#{cartHandlerMB.productid}"
+                                                         value="#{product.proId}"/>
+                            <f:setPropertyActionListener target="#{cartHandlerMB.productname}"
+                                                         value="#{product.proName}"/>
+                            <f:setPropertyActionListener target="#{cartHandlerMB.price}"
+                                                         value="#{product.proPrice}"/>
+                            
+                        
+                        </p:commandButton>
+                    </h:panelGrid>
+                    <p:commandLink update=":form:pro" oncomplete="PF('proDetails').show()" title="View Details">
+                        <h:outputText styleClass="ui-icon ui-icon-search"/>
+                        <f:setPropertyActionListener value="#{product}"
+                            target="#{displayProductMB.selectedProduct}"/>
+                    </p:commandLink>
+            </p:panel>
+        </p:dataGrid>
+            
+        <p:dialog header="Product info" widgetVar="proDetails" modal="true" 
+                  showEffect="fade" hideEffect="fade" appendTo="" resizable="false">
+            <p:outputPanel id="pro" >
+                <p:panelGrid columns="2">
+                    <f:facet name="header">
+                        <h:graphicImage name="#{displayProductMB.selectedProduct.proUrl}" library="imeges" width="200" height="250"/>
+                    </f:facet>
+                    <h:outputText value="Price"></h:outputText>
+                    <h:outputText value="#{displayProductMB.selectedProduct.proPrice}"/>
+                    <h:outputText value="Quantity"></h:outputText>
+                    <h:outputText value="#{displayProductMB.selectedProduct.proQty}"/>
+                    <h:outputText value="Product Sub Category"></h:outputText>
+                    <h:outputText value="#{displayProductMB.selectedProduct.subCategory.subCatName}"/>
+                    
+                    <h:outputText value="Description"></h:outputText>
+                    <h:outputText value="#{displayProductMB.selectedProduct.proDesc}"/>
+                    <h:outputText value=""></h:outputText>
+                </p:panelGrid>
+            </p:outputPanel>
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>
+
